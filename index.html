@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Todo App</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f3f4f6; margin: 0; padding: 2rem 1rem; }
+  main { max-width: 480px; margin: 0 auto; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  h1 { margin-top: 0; }
+  form { display: flex; gap: .5rem; }
+  input[type=text] { flex: 1; padding: .6rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+  button { padding: .6rem 1rem; border: 0; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer; font-size: 1rem; }
+  ul { list-style: none; padding: 0; margin: 1rem 0; }
+  li { display: flex; align-items: center; gap: .6rem; padding: .5rem 0; border-bottom: 1px solid #eee; }
+  li span { flex: 1; }
+  li.done span { text-decoration: line-through; color: #888; }
+  li button { background: transparent; color: #dc2626; padding: .2rem .5rem; }
+  .filters { display: flex; gap: .5rem; justify-content: center; }
+  .filters button { background: #e5e7eb; color: #111; padding: .3rem .8rem; }
+  .filters button.active { background: #2563eb; color: #fff; }
+  #count { color: #666; font-size: .9rem; text-align: center; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Todos</h1>
+  <form id="form">
+    <input type="text" id="input" placeholder="Neue Aufgabe…" autofocus required>
+    <button>Hinzufügen</button>
+  </form>
+  <ul id="list"></ul>
+  <div class="filters" id="filters">
+    <button data-f="all" class="active">Alle</button>
+    <button data-f="open">Offen</button>
+    <button data-f="done">Erledigt</button>
+  </div>
+  <p id="count"></p>
+</main>
+<script>
+  let todos = [];
+  try { todos = JSON.parse(localStorage.getItem('todos')) || []; } catch {}
+  let filter = 'all';
+  const $ = id => document.getElementById(id);
+
+  function save() {
+    try { localStorage.setItem('todos', JSON.stringify(todos)); } catch {}
+  }
+
+  function render() {
+    const list = $('list');
+    list.innerHTML = '';
+    todos
+      .filter(t => filter === 'all' || (filter === 'done') === t.done)
+      .forEach(t => {
+        const li = document.createElement('li');
+        li.className = t.done ? 'done' : '';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = t.done;
+        cb.onchange = () => { t.done = cb.checked; save(); render(); };
+        const span = document.createElement('span');
+        span.textContent = t.text;
+        const del = document.createElement('button');
+        del.textContent = '✕';
+        del.onclick = () => { todos = todos.filter(x => x !== t); save(); render(); };
+        li.append(cb, span, del);
+        list.append(li);
+      });
+    const open = todos.filter(t => !t.done).length;
+    $('count').textContent = `${open} offen von ${todos.length}`;
+  }
+
+  $('form').onsubmit = e => {
+    e.preventDefault();
+    const text = $('input').value.trim();
+    if (!text) return;
+    todos.push({ text, done: false });
+    $('input').value = '';
+    save(); render();
+  };
+
+  $('filters').onclick = e => {
+    if (!e.target.dataset.f) return;
+    filter = e.target.dataset.f;
+    document.querySelectorAll('#filters button').forEach(b => b.classList.toggle('active', b === e.target));
+    render();
+  };
+
+  render();
+</script>
+</body>
+</html>
