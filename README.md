@@ -24,13 +24,16 @@ Danach http://127.0.0.1:5000 im Browser öffnen. Die Datenbank `todos.db` wird b
 
 ```sh
 .venv/bin/pip install -r requirements-dev.txt
+.venv/bin/playwright install chromium   # einmalig, für die UI-Tests
 .venv/bin/pytest                  # alle Tests
 .venv/bin/pytest -m unit          # nur Unit-Tests
 .venv/bin/pytest -m module        # nur Modul-Tests
 .venv/bin/pytest -m integration   # nur Integrationstests
+.venv/bin/pytest -m ui            # nur UI-Tests (Browser, headless)
+.venv/bin/pytest --headed -m ui   # UI-Tests mit sichtbarem Browser
 ```
 
-Die Tests nutzen temporäre Datenbanken; die echte `todos.db` bleibt unberührt.
+Die Tests nutzen temporäre Datenbanken und eigene Server-Prozesse auf freien Ports; die echte `todos.db` und ein laufender Server bleiben unberührt.
 
 ## API
 

@@ -22,3 +22,14 @@ def db_path(tmp_path, monkeypatch):
 def client(db_path):
     todo_app.app.config["TESTING"] = True
     return todo_app.app.test_client()
+
+
+@pytest.fixture
+def server(tmp_path):
+    """Echter Server-Prozess auf freiem Port mit eigener temporärer Datenbank."""
+    from helpers import Server
+
+    s = Server(str(tmp_path / "server.db"))
+    s.start()
+    yield s
+    s.stop()

@@ -9,8 +9,8 @@ Client-Server-Todo-App: Flask-Backend mit SQLite in `app.py`, Frontend als einze
 ## Starten und prüfen
 
 - Starten: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/python app.py`, dann http://127.0.0.1:5000.
-- Tests: `.venv/bin/pip install -r requirements-dev.txt`, dann `.venv/bin/pytest` (Marker `unit`, `module`, `integration`). Vor jedem Commit die gesamte Suite laufen lassen. Neue Funktionen und Endpunkte bekommen Tests auf der passenden Ebene. Tests nutzen temporäre Datenbanken und dürfen `todos.db` nicht berühren.
-- Das Frontend hat keine automatisierten Tests; es manuell im Browser prüfen: hinzufügen, abhaken, bearbeiten (Doppelklick), löschen, Filter, Neuladen (Persistenz).
+- Tests: `.venv/bin/pip install -r requirements-dev.txt`, `.venv/bin/playwright install chromium` (einmalig), dann `.venv/bin/pytest` (Marker `unit`, `module`, `integration`, `ui`). Vor jedem Commit die gesamte Suite laufen lassen. Neue Funktionen und Endpunkte bekommen Tests auf der passenden Ebene. Tests nutzen temporäre Datenbanken und dürfen `todos.db` nicht berühren.
+- Frontend-Änderungen durch UI-Tests in `tests/test_ui.py` absichern. In Playwright-Tests nach Aktionen auf die Serverantwort warten (z. B. `add()` wartet, bis das Eingabefeld leer ist), sonst entstehen Race-Conditions. `base_url` nicht überschreiben, `server.base` nutzen.
 - Ist keine Browserprüfung möglich, das in Commit-Nachricht und Devlog ausdrücklich so festhalten.
 
 ## Konventionen

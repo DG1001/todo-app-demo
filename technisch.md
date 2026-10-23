@@ -64,17 +64,20 @@ Fehler kommen als `{"error": "…"}`. Der Text wird serverseitig mit `strip()` b
 
 ## Tests
 
-pytest-Suite unter `tests/` (Konfiguration in `pytest.ini`, Abhängigkeit in `requirements-dev.txt`), 73 Tests in drei Ebenen, per Marker einzeln startbar (`-m unit|module|integration`):
+pytest-Suite unter `tests/` (Konfiguration in `pytest.ini`, Abhängigkeiten in `requirements-dev.txt`), 104 Tests in vier Ebenen, per Marker einzeln startbar (`-m unit|module|integration|ui`):
 
 | Ebene | Datei | Gegenstand |
 |---|---|---|
 | Unit | `tests/test_unit.py` | `clean_text`, `row_to_dict`, `init_db` (Schema, Idempotenz), `TODO_DB`-Auswertung (im Subprozess) |
 | Modul | `tests/test_module.py` | Alle Endpunkte samt SQLite über den Flask-Test-Client: Statuscodes, Validierung, Teil-Updates, Rollback bei Fehlern, 404/405, SQL-Injection, ID-Vergabe, Schließen der DB-Verbindung, Auslieferung von `/` |
 | Integration | `tests/test_integration.py` | Echter Server-Prozess auf freiem Port, Zugriff per HTTP: Lebenszyklus, Fehlerantworten, Persistenz über Neustart, parallele Schreibzugriffe |
+| UI | `tests/test_ui.py` | Frontend in Chromium (Playwright, headless) gegen einen echten Server: Hinzufügen, Abhaken, Löschen, Filter, Bearbeiten (Enter, Escape, Blur, Leertext, doppelte Requests), Persistenz nach Neuladen, zweiter Browserkontext, XSS-Payload als Text, Fehlerfälle (Server nicht erreichbar, 500 bei POST/DELETE/PATCH) |
 
-`tests/conftest.py` biegt `DB_PATH` pro Test auf eine temporäre Datei um (`db_path`, `client`). Die echte `todos.db` wird nicht berührt.
+`tests/conftest.py` biegt `DB_PATH` pro Test auf eine temporäre Datei um (`db_path`, `client`) und stellt die Fixture `server` bereit; `tests/helpers.py` enthält die Klasse `Server`, die einen Flask-Prozess auf freiem Port startet und stoppt (gemeinsam genutzt von Integrations- und UI-Tests). Die echte `todos.db` und ein laufender Server werden nicht berührt.
 
-Nicht abgedeckt: Das Frontend (`static/index.html`) hat keine automatisierten Tests, es wird nur auf Auslieferung geprüft. Die Browserlogik (Rendern, Filter, Doppelklick-Bearbeiten) ist weiter manuell zu testen.
+UI-Tests benötigen einmalig `playwright install chromium`. Die Fixture `base_url` wird bewusst nicht überschrieben, weil sie von pytest-playwright session-weit genutzt wird; die Tests verwenden `server.base`.
+
+Nicht abgedeckt: Andere Browser als Chromium, mobile Viewports, Barrierefreiheit und visuelle Regression.
 
 ## Bekannte Einschränkungen
 
