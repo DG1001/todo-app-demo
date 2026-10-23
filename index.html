@@ -61,6 +61,27 @@
         cb.onchange = () => { t.done = cb.checked; save(); render(); };
         const span = document.createElement('span');
         span.textContent = t.text;
+        span.title = 'Doppelklick zum Bearbeiten';
+        span.ondblclick = () => {
+          const edit = document.createElement('input');
+          edit.type = 'text';
+          edit.value = t.text;
+          let finished = false;
+          const finish = apply => {
+            if (finished) return;
+            finished = true;
+            const v = edit.value.trim();
+            if (apply && v) t.text = v;
+            save(); render();
+          };
+          edit.onblur = () => finish(true);
+          edit.onkeydown = e => {
+            if (e.key === 'Enter') finish(true);
+            if (e.key === 'Escape') finish(false);
+          };
+          li.replaceChild(edit, span);
+          edit.focus();
+        };
         const del = document.createElement('button');
         del.textContent = '✕';
         del.onclick = () => { todos = todos.filter(x => x !== t); save(); render(); };
