@@ -4,6 +4,7 @@ Laufendes Entwicklungsprotokoll der Todo-App. Neueste Einträge oben.
 
 ## 2026-10-23
 
+- **Tests (committed):** pytest-Suite mit 73 Tests angelegt (`tests/test_unit.py`, `test_module.py`, `test_integration.py`, `conftest.py`, `pytest.ini`, `requirements-dev.txt`). Alle bestehen. Gegenprobe mit vier absichtlich eingebauten Fehlern (`strip` entfernt, 404→200, `DELETE` ohne `WHERE`, kein `commit`) in einer Kopie: Jeder wurde von den Tests erkannt. Frontend weiterhin ohne automatisierte Tests. README, technisch.md, AGENTS.md, `.gitignore` angepasst.
 - **App gestartet:** Server läuft lokal auf http://127.0.0.1:5000 (Hinweis: `localhost` kann auf macOS durch den AirPlay-Empfänger auf Port 5000 belegt sein).
 - **Client-Server-Umstellung (committed):** `app.py` (Flask, SQLite, REST-API unter `/api/todos`), `requirements.txt`, `.gitignore` angelegt; `index.html` nach `static/index.html` verschoben und von `localStorage` auf `fetch` umgestellt. API mit dem Flask-Test-Client geprüft (alle Endpunkte, 400/404-Fälle: OK). Frontend nicht im Browser getestet. README, technisch.md, fachlich.md, AGENTS.md angepasst.
 - **Commit:** Dokumentation (`devlog.md`, `technisch.md`, `fachlich.md`, `README.md`, `AGENTS.md`) committed.

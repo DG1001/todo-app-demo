@@ -9,7 +9,8 @@ Client-Server-Todo-App: Flask-Backend mit SQLite in `app.py`, Frontend als einze
 ## Starten und prüfen
 
 - Starten: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/python app.py`, dann http://127.0.0.1:5000.
-- Es gibt keine Test-Suite im Repo. Die API mit dem Flask-Test-Client prüfen (`TODO_DB` auf eine temporäre Datei setzen, damit `todos.db` unberührt bleibt) und das Frontend manuell im Browser: hinzufügen, abhaken, bearbeiten (Doppelklick), löschen, Filter, Neuladen (Persistenz).
+- Tests: `.venv/bin/pip install -r requirements-dev.txt`, dann `.venv/bin/pytest` (Marker `unit`, `module`, `integration`). Vor jedem Commit die gesamte Suite laufen lassen. Neue Funktionen und Endpunkte bekommen Tests auf der passenden Ebene. Tests nutzen temporäre Datenbanken und dürfen `todos.db` nicht berühren.
+- Das Frontend hat keine automatisierten Tests; es manuell im Browser prüfen: hinzufügen, abhaken, bearbeiten (Doppelklick), löschen, Filter, Neuladen (Persistenz).
 - Ist keine Browserprüfung möglich, das in Commit-Nachricht und Devlog ausdrücklich so festhalten.
 
 ## Konventionen

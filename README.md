@@ -20,6 +20,18 @@ python3 -m venv .venv
 
 Danach http://127.0.0.1:5000 im Browser öffnen. Die Datenbank `todos.db` wird beim ersten Start angelegt. Mit der Umgebungsvariable `TODO_DB` lässt sich ein anderer Pfad festlegen.
 
+## Tests
+
+```sh
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/pytest                  # alle Tests
+.venv/bin/pytest -m unit          # nur Unit-Tests
+.venv/bin/pytest -m module        # nur Modul-Tests
+.venv/bin/pytest -m integration   # nur Integrationstests
+```
+
+Die Tests nutzen temporäre Datenbanken; die echte `todos.db` bleibt unberührt.
+
 ## API
 
 | Methode | Pfad | Beschreibung |
@@ -36,6 +48,7 @@ Danach http://127.0.0.1:5000 im Browser öffnen. Die Datenbank `todos.db` wird b
 | `app.py` | Flask-Server, REST-API und SQLite-Zugriff |
 | `static/index.html` | Frontend (HTML, CSS, JavaScript) |
 | `requirements.txt` | Python-Abhängigkeiten |
+| `requirements-dev.txt`, `pytest.ini`, `tests/` | Testabhängigkeit, Konfiguration und Tests |
 | `fachlich.md` | Fachliche Beschreibung: Zweck, Funktionen, Regeln |
 | `technisch.md` | Technische Dokumentation: Aufbau, Datenmodell, Einschränkungen |
 | `devlog.md` | Laufendes Entwicklungsprotokoll |
