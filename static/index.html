@@ -39,12 +39,45 @@
 </main>
 <script>
   let todos = [];
-  try { todos = JSON.parse(localStorage.getItem('todos')) || []; } catch {}
   let filter = 'all';
   const $ = id => document.getElementById(id);
 
-  function save() {
-    try { localStorage.setItem('todos', JSON.stringify(todos)); } catch {}
+  async function api(path = '', options = {}) {
+    const res = await fetch('/api/todos' + path, {
+      headers: { 'Content-Type': 'application/json' },
+      ...options,
+    });
+    if (!res.ok) throw new Error(`Serverfehler ${res.status}`);
+    return res.status === 204 ? null : res.json();
+  }
+
+  async function load() {
+    try {
+      todos = await api();
+    } catch (err) {
+      $('count').textContent = 'Server nicht erreichbar';
+      return;
+    }
+    render();
+  }
+
+  async function update(t, changes) {
+    try {
+      Object.assign(t, await api(`/${t.id}`, { method: 'PATCH', body: JSON.stringify(changes) }));
+    } catch (err) {
+      alert(err.message);
+    }
+    render();
+  }
+
+  async function remove(t) {
+    try {
+      await api(`/${t.id}`, { method: 'DELETE' });
+      todos = todos.filter(x => x !== t);
+    } catch (err) {
+      alert(err.message);
+    }
+    render();
   }
 
   function render() {
@@ -58,7 +91,7 @@
         const cb = document.createElement('input');
         cb.type = 'checkbox';
         cb.checked = t.done;
-        cb.onchange = () => { t.done = cb.checked; save(); render(); };
+        cb.onchange = () => update(t, { done: cb.checked });
         const span = document.createElement('span');
         span.textContent = t.text;
         span.title = 'Doppelklick zum Bearbeiten';
@@ -71,8 +104,8 @@
             if (finished) return;
             finished = true;
             const v = edit.value.trim();
-            if (apply && v) t.text = v;
-            save(); render();
+            if (apply && v && v !== t.text) update(t, { text: v });
+            else render();
           };
           edit.onblur = () => finish(true);
           edit.onkeydown = e => {
@@ -84,7 +117,7 @@
         };
         const del = document.createElement('button');
         del.textContent = '✕';
-        del.onclick = () => { todos = todos.filter(x => x !== t); save(); render(); };
+        del.onclick = () => remove(t);
         li.append(cb, span, del);
         list.append(li);
       });
@@ -92,13 +125,17 @@
     $('count').textContent = `${open} offen von ${todos.length}`;
   }
 
-  $('form').onsubmit = e => {
+  $('form').onsubmit = async e => {
     e.preventDefault();
     const text = $('input').value.trim();
     if (!text) return;
-    todos.push({ text, done: false });
-    $('input').value = '';
-    save(); render();
+    try {
+      todos.push(await api('', { method: 'POST', body: JSON.stringify({ text }) }));
+      $('input').value = '';
+    } catch (err) {
+      alert(err.message);
+    }
+    render();
   };
 
   $('filters').onclick = e => {
@@ -108,7 +145,7 @@
     render();
   };
 
-  render();
+  load();
 </script>
 </body>
 </html>

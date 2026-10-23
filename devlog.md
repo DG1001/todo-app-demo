@@ -4,6 +4,8 @@ Laufendes Entwicklungsprotokoll der Todo-App. Neueste Einträge oben.
 
 ## 2026-10-23
 
+- **App gestartet:** Server läuft lokal auf http://127.0.0.1:5000 (Hinweis: `localhost` kann auf macOS durch den AirPlay-Empfänger auf Port 5000 belegt sein).
+- **Client-Server-Umstellung (committed):** `app.py` (Flask, SQLite, REST-API unter `/api/todos`), `requirements.txt`, `.gitignore` angelegt; `index.html` nach `static/index.html` verschoben und von `localStorage` auf `fetch` umgestellt. API mit dem Flask-Test-Client geprüft (alle Endpunkte, 400/404-Fälle: OK). Frontend nicht im Browser getestet. README, technisch.md, fachlich.md, AGENTS.md angepasst.
 - **Commit:** Dokumentation (`devlog.md`, `technisch.md`, `fachlich.md`, `README.md`, `AGENTS.md`) committed.
 - **Doku:** `README.md` (Überblick, Starten, Projektstruktur) und `AGENTS.md` (Konventionen und Arbeitsregeln für Agenten) angelegt.
 - **Doku:** `technisch.md` (Architektur, Datenmodell, Persistenz, Einschränkungen) und `fachlich.md` (Zweck, Funktionen, Regeln, Abgrenzung) angelegt.

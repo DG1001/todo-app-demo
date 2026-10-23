@@ -2,7 +2,7 @@
 
 ## Zweck
 
-Die App hilft dabei, persönliche Aufgaben zu erfassen und abzuarbeiten. Sie ist für eine einzelne Person gedacht, die schnell eine Liste führen möchte, ohne Konto oder Installation.
+Die App hilft dabei, Aufgaben zu erfassen und abzuarbeiten. Sie ist für eine Person oder ein kleines Team gedacht, das schnell eine gemeinsame Liste führen möchte, ohne Konto. Ein Server muss dafür laufen (siehe `README.md`).
 
 ## Funktionen
 
@@ -17,12 +17,13 @@ Die App hilft dabei, persönliche Aufgaben zu erfassen und abzuarbeiten. Sie ist
 
 - Neue Aufgaben starten immer als „offen“ und werden am Ende der Liste eingefügt.
 - Die Reihenfolge entspricht der Anlage-Reihenfolge.
-- Die Liste bleibt beim erneuten Öffnen im selben Browser erhalten.
+- Die Liste liegt auf dem Server. Sie bleibt über Neustarts und in jedem Browser, der den Server erreicht, erhalten.
+- Es gibt nur eine gemeinsame Liste und keine Anmeldung: Wer den Server erreicht, sieht und ändert dieselben Aufgaben. Änderungen anderer erscheinen erst nach dem Neuladen.
 - Der gewählte Filter wird nicht gespeichert; nach dem Neuladen gilt wieder „Alle“.
 
 ## Abgrenzung (nicht enthalten)
 
-Fälligkeitsdaten, Prioritäten, Kategorien, Sortierung, mehrere Listen, Anmeldung, Synchronisation zwischen Geräten und Mehrbenutzerbetrieb.
+Fälligkeitsdaten, Prioritäten, Kategorien, Sortierung, mehrere Listen, Anmeldung, Live-Synchronisation und getrennte Listen pro Benutzer.
 
 ## Mögliche Erweiterungen
 

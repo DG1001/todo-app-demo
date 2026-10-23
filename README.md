@@ -1,6 +1,6 @@
 # Todo App
 
-Einfache Todo-Liste in einer einzigen HTML-Datei. Kein Build, kein Framework, kein Backend.
+Einfache Todo-Liste als Client-Server-App: Flask-Backend mit SQLite, Frontend als einzelne HTML-Datei (Vanilla JS).
 
 ## Funktionen
 
@@ -8,21 +8,34 @@ Einfache Todo-Liste in einer einzigen HTML-Datei. Kein Build, kein Framework, ke
 - Aufgaben per Doppelklick bearbeiten (Enter speichert, Esc bricht ab)
 - Filter: Alle / Offen / Erledigt
 - Zähler der offenen Aufgaben
-- Speicherung im Browser (`localStorage`), die Liste bleibt nach dem Neuladen erhalten
+- Speicherung auf dem Server (SQLite), die Liste bleibt über Neustarts und Browser hinweg erhalten
 
 ## Starten
 
 ```sh
-open index.html
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python app.py
 ```
 
-Alternativ die Datei `index.html` einfach im Browser öffnen. Ein Server ist nicht nötig.
+Danach http://127.0.0.1:5000 im Browser öffnen. Die Datenbank `todos.db` wird beim ersten Start angelegt. Mit der Umgebungsvariable `TODO_DB` lässt sich ein anderer Pfad festlegen.
+
+## API
+
+| Methode | Pfad | Beschreibung |
+|---|---|---|
+| GET | `/api/todos` | Alle Aufgaben |
+| POST | `/api/todos` | Anlegen, Body `{"text": "…"}` |
+| PATCH | `/api/todos/<id>` | Ändern, Body `{"text"?: "…", "done"?: true}` |
+| DELETE | `/api/todos/<id>` | Löschen |
 
 ## Projektstruktur
 
 | Datei | Inhalt |
 |---|---|
-| `index.html` | Die komplette App (HTML, CSS, JavaScript) |
+| `app.py` | Flask-Server, REST-API und SQLite-Zugriff |
+| `static/index.html` | Frontend (HTML, CSS, JavaScript) |
+| `requirements.txt` | Python-Abhängigkeiten |
 | `fachlich.md` | Fachliche Beschreibung: Zweck, Funktionen, Regeln |
 | `technisch.md` | Technische Dokumentation: Aufbau, Datenmodell, Einschränkungen |
 | `devlog.md` | Laufendes Entwicklungsprotokoll |
@@ -30,4 +43,4 @@ Alternativ die Datei `index.html` einfach im Browser öffnen. Ein Server ist nic
 
 ## Hinweise
 
-Die Daten liegen nur im jeweiligen Browser und sind nicht zwischen Geräten synchronisiert.
+Es gibt keine Anmeldung: Alle, die den Server erreichen, sehen und ändern dieselbe Liste. Der Flask-Entwicklungsserver ist nur für lokale Nutzung gedacht.

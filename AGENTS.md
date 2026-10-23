@@ -4,22 +4,22 @@ Hinweise für KI-Coding-Agenten in diesem Repository.
 
 ## Projekt
 
-Todo-App als einzelne Datei `index.html` (HTML, CSS und Vanilla-JS gemeinsam). Kein Build, keine Abhängigkeiten, kein Paketmanager, keine Tests. Details: `fachlich.md` (Verhalten) und `technisch.md` (Aufbau).
+Client-Server-Todo-App: Flask-Backend mit SQLite in `app.py`, Frontend als einzelne Datei `static/index.html` (HTML, CSS, Vanilla-JS). Einzige Abhängigkeit ist Flask (`requirements.txt`), kein Build-Schritt. Details: `fachlich.md` (Verhalten) und `technisch.md` (Aufbau, API).
 
 ## Starten und prüfen
 
-- Starten: `open index.html` (kein Server nötig).
-- Es gibt keine automatisierten Tests. Änderungen manuell im Browser prüfen: hinzufügen, abhaken, bearbeiten (Doppelklick), löschen, Filter, Neuladen (Persistenz).
+- Starten: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/python app.py`, dann http://127.0.0.1:5000.
+- Es gibt keine Test-Suite im Repo. Die API mit dem Flask-Test-Client prüfen (`TODO_DB` auf eine temporäre Datei setzen, damit `todos.db` unberührt bleibt) und das Frontend manuell im Browser: hinzufügen, abhaken, bearbeiten (Doppelklick), löschen, Filter, Neuladen (Persistenz).
 - Ist keine Browserprüfung möglich, das in Commit-Nachricht und Devlog ausdrücklich so festhalten.
 
 ## Konventionen
 
 - Sprache: Deutsch für UI-Texte, Dokumentation und Commit-Nachrichten.
-- Alles bleibt in `index.html`, solange kein Aufteilen ausdrücklich gewünscht ist. Keine Frameworks oder externen Bibliotheken ergänzen.
+- Backend in `app.py`, Frontend in `static/index.html`. Keine Frameworks oder externen Bibliotheken im Frontend, keine weiteren Python-Abhängigkeiten ohne Absprache.
 - Texte der Nutzer immer über `textContent` setzen, nie über `innerHTML`.
-- Zugriffe auf `localStorage` in `try/catch` kapseln. Die App muss auch ohne Speicher funktionieren.
+- SQL nur mit Platzhaltern (`?`), nie mit String-Zusammenbau.
+- Neue oder geänderte API-Endpunkte in `README.md` und `technisch.md` nachziehen.
 - Stil des vorhandenen Codes übernehmen (Einrückung, Benennung, sparsame Kommentare).
-- Aufgaben haben keine IDs, sondern werden über Objektidentität referenziert. Bei Änderungen daran `technisch.md` anpassen.
 
 ## Dokumentation pflegen
 
