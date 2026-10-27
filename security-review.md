@@ -67,7 +67,7 @@ Zum Freigeben `[ ]` zu `[x]` ändern. Umgesetzt wird nur, was angekreuzt ist. Da
 
 ### 7. Session-Link in Commit-Nachrichten — Hinweis
 
-- **Stelle:** Vier Commits (`git log`, Zeile `Claude-Session: https://claude.ai/code/session_…`)
+- **Stelle:** Alle bisherigen Commits ab dem Doku-Commit (`git log`, Zeile `Claude-Session: https://claude.ai/code/session_…`)
 - **Problem:** Kein Secret, aber Metadaten. Bei einem Push in ein öffentliches Repo wären sie sichtbar.
 - **Vorschlag:** Vor dem ersten Push entscheiden. Entfernen heißt, die Historie umzuschreiben (neue Commit-Hashes); das ist nur sinnvoll, solange es keinen Remote gibt.
 - [ ] freigegeben

@@ -44,6 +44,10 @@ Die Tests nutzen temporäre Datenbanken und eigene Server-Prozesse auf freien Po
 | PATCH | `/api/todos/<id>` | Ändern, Body `{"text"?: "…", "done"?: true}` |
 | DELETE | `/api/todos/<id>` | Löschen |
 
+## Lizenz
+
+MIT, siehe `LICENSE`.
+
 ## Projektstruktur
 
 | Datei | Inhalt |
@@ -55,6 +59,8 @@ Die Tests nutzen temporäre Datenbanken und eigene Server-Prozesse auf freien Po
 | `fachlich.md` | Fachliche Beschreibung: Zweck, Funktionen, Regeln |
 | `technisch.md` | Technische Dokumentation: Aufbau, Datenmodell, Einschränkungen |
 | `devlog.md` | Laufendes Entwicklungsprotokoll |
+| `security-review.md` | Security-Review mit Freigabe-Checkboxen (Befunde noch offen) |
+| `LICENSE` | MIT-Lizenz |
 | `AGENTS.md` | Hinweise für KI-Coding-Agenten |
 
 ## Hinweise

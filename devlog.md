@@ -2,6 +2,10 @@
 
 Laufendes Entwicklungsprotokoll der Todo-App. Neueste Einträge oben.
 
+## 2026-10-27
+
+- **Veröffentlichung vorbereitet (committed):** Repo auf personen- und firmenbezogene Daten geprüft. Dateien sauber; die Historie enthält Autorname und Firmen-Mailadresse sowie `Claude-Session:`-Links. Entscheidung: Historie und Mailadresse bleiben bewusst unverändert, `security-review.md` bleibt im Repo (Befunde offen). MIT-`LICENSE` (Copyright 2026 Frederik Wystup) ergänzt, README verweist darauf. Das Projekt soll als Beispiel öffentlich sichtbar machen, wie es vom einfachen Prompt zur dokumentierten, getesteten und geprüften App kam (README, AGENTS.md, Devlog, Tests, Review). Noch kein Remote konfiguriert.
+
 ## 2026-10-23
 
 - **UI-Tests (committed):** `tests/test_ui.py` mit 31 Playwright-Tests (Chromium, headless) angelegt, dazu `tests/helpers.py` (gemeinsame `Server`-Klasse, aus `test_integration.py` herausgelöst) und `pytest-playwright` in `requirements-dev.txt`. Gesamt 104 Tests, alle grün; die UI-Tests liefen dreimal hintereinander stabil. Gegenprobe mit fünf Frontend-Fehlern in einer Kopie: `innerHTML` statt `textContent`, Escape wirkungslos, Filter wirkungslos und falscher Zähler wurden erkannt. Das entfernte `finished`-Flag wurde zunächst NICHT erkannt; dafür gibt es jetzt einen Test mit verzögerter PATCH-Antwort, der es erkennt. Beim Schreiben der Tests aufgefallen: Der Eingabetext wird erst nach der Serverantwort geleert; tippt man währenddessen schon die nächste Aufgabe, wird sie gelöscht (nicht behoben).
